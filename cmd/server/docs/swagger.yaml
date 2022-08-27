@@ -1,0 +1,1193 @@
+basePath: /api/v1
+definitions:
+  cluster.CreateClusterRequestBody:
+    properties:
+      cluster_name:
+        type: string
+      description:
+        type: string
+      project_name:
+        type: string
+    required:
+    - cluster_name
+    - project_name
+    type: object
+  cluster.UpdateClusterRequestBody:
+    properties:
+      cluster_name:
+        type: string
+      description:
+        type: string
+    type: object
+  label.CreateLabelRequestBody:
+    properties:
+      cluster_name:
+        type: string
+      label_key:
+        type: string
+      label_value:
+        type: string
+      project_name:
+        type: string
+    required:
+    - cluster_name
+    - label_key
+    - label_value
+    - project_name
+    type: object
+  project.CreateProjectRequestBody:
+    properties:
+      description:
+        type: string
+      project_name:
+        type: string
+    required:
+    - description
+    - project_name
+    type: object
+  serviceaccount.AddSaNsRequestBody:
+    properties:
+      cluster_name:
+        type: string
+      namespace:
+        type: string
+      project_name:
+        type: string
+      sa_name:
+        type: string
+    required:
+    - cluster_name
+    - namespace
+    - project_name
+    - sa_name
+    type: object
+  serviceaccount.CreateSaRequestBody:
+    properties:
+      cluster_name:
+        type: string
+      namespace:
+        type: string
+      project_name:
+        type: string
+      sa_name:
+        type: string
+      sa_token:
+        type: string
+    required:
+    - cluster_name
+    - namespace
+    - project_name
+    - sa_name
+    - sa_token
+    type: object
+  serviceaccount.UpdateSaRequestBody:
+    properties:
+      sa_token:
+        type: string
+    required:
+    - sa_token
+    type: object
+  user.CreateUserRequestBody:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  util.Res:
+    properties:
+      code:
+        type: integer
+      data: {}
+      msg:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample server Petstore server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Swagger Example API
+  version: "1.0"
+paths:
+  /cluster/create:
+    post:
+      consumes:
+      - application/json
+      description: Create Cluster
+      operationId: CreateCluster
+      parameters:
+      - description: Create Cluster
+        in: body
+        name: ReqeustBody
+        required: true
+        schema:
+          $ref: '#/definitions/cluster.CreateClusterRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "400":
+          description: code":400,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "404":
+          description: code":404,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "500":
+          description: code":500,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+      security:
+      - ApiKeyAuth: []
+      summary: CreateCluster
+      tags:
+      - CreateCluster
+  /cluster/delete:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Cluster
+      operationId: DeleteCluster
+      parameters:
+      - description: Project_Name
+        in: query
+        name: project_name
+        required: true
+        type: string
+      - description: Cluster_Name
+        in: query
+        name: cluster_name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "400":
+          description: code":400,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "404":
+          description: code":404,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "500":
+          description: code":500,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+      security:
+      - ApiKeyAuth: []
+      summary: DeleteCluster
+      tags:
+      - DeleteCluster
+  /cluster/get_id:
+    get:
+      consumes:
+      - application/json
+      description: Get ClusterID
+      operationId: GetClusterId
+      parameters:
+      - description: Project Name
+        in: query
+        name: project_name
+        required: true
+        type: string
+      - description: Cluster Name
+        in: query
+        name: cluster_name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "400":
+          description: code":400,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "404":
+          description: code":404,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "500":
+          description: code":500,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+      security:
+      - ApiKeyAuth: []
+      summary: GetClusterId
+      tags:
+      - GetClusterId
+  /cluster/label:
+    get:
+      consumes:
+      - application/json
+      description: List Cluster for label
+      operationId: ListGetLabel
+      parameters:
+      - description: Project Name
+        in: query
+        name: project_name
+        type: string
+      - description: Label Key
+        in: query
+        name: label_key
+        required: true
+        type: string
+      - description: Label value
+        in: query
+        name: label_value
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "400":
+          description: code":400,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "404":
+          description: code":404,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "500":
+          description: code":500,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+      security:
+      - ApiKeyAuth: []
+      summary: ListGetLabel
+      tags:
+      - ListGetLabel
+  /cluster/list:
+    get:
+      consumes:
+      - application/json
+      description: List  Cluster
+      operationId: ListCluster
+      parameters:
+      - description: Project Name
+        in: query
+        name: project_name
+        type: string
+      - description: Cluster Name
+        in: query
+        name: cluster_name
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "400":
+          description: code":400,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "404":
+          description: code":404,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "500":
+          description: code":500,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+      security:
+      - ApiKeyAuth: []
+      summary: ListCluster
+      tags:
+      - ListCluster
+  /cluster/update:
+    put:
+      consumes:
+      - application/json
+      description: Update Cluster
+      operationId: UpdateCluster
+      parameters:
+      - description: Project_Name
+        in: query
+        name: project_name
+        required: true
+        type: string
+      - description: Cluster_ID
+        in: query
+        name: cluster_id
+        required: true
+        type: string
+      - description: Update Cluster
+        in: body
+        name: ReqeustBody
+        required: true
+        schema:
+          $ref: '#/definitions/cluster.UpdateClusterRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "400":
+          description: code":400,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "404":
+          description: code":404,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "500":
+          description: code":500,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+      security:
+      - ApiKeyAuth: []
+      summary: UpdateCluster
+      tags:
+      - UpdateCluster
+  /label/create:
+    post:
+      consumes:
+      - application/json
+      description: Create Label
+      operationId: CreateLabel
+      parameters:
+      - description: Create Label
+        in: body
+        name: ReqeustBody
+        required: true
+        schema:
+          $ref: '#/definitions/label.CreateLabelRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "400":
+          description: code":400,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "404":
+          description: code":404,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "500":
+          description: code":500,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+      security:
+      - ApiKeyAuth: []
+      summary: CreateLabel
+      tags:
+      - CreateLabel
+  /label/delete:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Label
+      operationId: DeleteLabel
+      parameters:
+      - description: Project_Name
+        in: query
+        name: project_name
+        required: true
+        type: string
+      - description: Cluster_Name
+        in: query
+        name: cluster_name
+        required: true
+        type: string
+      - description: Label_Key
+        in: query
+        name: label_key
+        required: true
+        type: string
+      - description: Label_value
+        in: query
+        name: label_value
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "400":
+          description: code":400,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "404":
+          description: code":404,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "500":
+          description: code":500,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+      security:
+      - ApiKeyAuth: []
+      summary: DeleteLabel
+      tags:
+      - DeleteLabel
+  /label/list:
+    get:
+      consumes:
+      - application/json
+      description: List Cluster's label
+      operationId: ListClusterLabel
+      parameters:
+      - description: Project Name
+        in: query
+        name: project_name
+        required: true
+        type: string
+      - description: Cluster Name
+        in: query
+        name: cluster_name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "400":
+          description: code":400,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "404":
+          description: code":404,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "500":
+          description: code":500,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+      security:
+      - ApiKeyAuth: []
+      summary: ListClusterLabel
+      tags:
+      - ListClusterLabel
+  /project/create:
+    post:
+      consumes:
+      - application/json
+      description: Create Project
+      operationId: CreateProject
+      parameters:
+      - description: Create Project
+        in: body
+        name: ReqeustBody
+        required: true
+        schema:
+          $ref: '#/definitions/project.CreateProjectRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "400":
+          description: code":400,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "404":
+          description: code":404,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "500":
+          description: code":500,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+      security:
+      - ApiKeyAuth: []
+      summary: CreateProject
+      tags:
+      - CreateProject
+  /project/delete:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Project
+      operationId: DeleteProject
+      parameters:
+      - description: Project_Name
+        in: query
+        name: project_name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "400":
+          description: code":400,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "404":
+          description: code":404,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "500":
+          description: code":500,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+      security:
+      - ApiKeyAuth: []
+      summary: DeleteProject
+      tags:
+      - DeleteProject
+  /project/get_id:
+    get:
+      consumes:
+      - application/json
+      description: Get ProjectID
+      operationId: GetProjectId
+      parameters:
+      - description: Project Name
+        in: query
+        name: project_name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "400":
+          description: code":400,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "404":
+          description: code":404,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "500":
+          description: code":500,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+      security:
+      - ApiKeyAuth: []
+      summary: GetProjectId
+      tags:
+      - GetProjectId
+  /project/list:
+    get:
+      consumes:
+      - application/json
+      description: List Project
+      operationId: ListProject
+      parameters:
+      - description: Project Name
+        in: query
+        name: project_name
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "400":
+          description: code":400,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "404":
+          description: code":404,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "500":
+          description: code":500,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+      security:
+      - ApiKeyAuth: []
+      summary: ListProject
+      tags:
+      - ListProject
+  /project/update:
+    put:
+      consumes:
+      - application/json
+      description: Update Project
+      operationId: UpdateProject
+      parameters:
+      - description: Project_ID
+        in: query
+        name: project_id
+        required: true
+        type: string
+      - description: Update Project
+        in: body
+        name: ReqeustBody
+        required: true
+        schema:
+          $ref: '#/definitions/project.CreateProjectRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "400":
+          description: code":400,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "404":
+          description: code":404,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "500":
+          description: code":500,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+      security:
+      - ApiKeyAuth: []
+      summary: UpdateProject
+      tags:
+      - UpdateProject
+  /sa/addns:
+    post:
+      consumes:
+      - application/json
+      description: ADD ServiceAccount NameSpace
+      operationId: AddNameSpace
+      parameters:
+      - description: Add Sa NameSpace
+        in: body
+        name: ReqeustBody
+        required: true
+        schema:
+          $ref: '#/definitions/serviceaccount.AddSaNsRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "400":
+          description: code":400,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "404":
+          description: code":404,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "500":
+          description: code":500,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+      security:
+      - ApiKeyAuth: []
+      summary: AddNameSpace
+      tags:
+      - AddNameSpace
+  /sa/create:
+    post:
+      consumes:
+      - application/json
+      description: Create ServiceAccount
+      operationId: CreateSa
+      parameters:
+      - description: Create Sa
+        in: body
+        name: ReqeustBody
+        required: true
+        schema:
+          $ref: '#/definitions/serviceaccount.CreateSaRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "400":
+          description: code":400,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "404":
+          description: code":404,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "500":
+          description: code":500,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+      security:
+      - ApiKeyAuth: []
+      summary: CreateSa
+      tags:
+      - CreateSa
+  /sa/delete:
+    delete:
+      consumes:
+      - application/json
+      description: Delete ServiceAccount
+      operationId: DeleteSa
+      parameters:
+      - description: Project_Name
+        in: query
+        name: project_name
+        required: true
+        type: string
+      - description: Cluster_Name
+        in: query
+        name: cluster_name
+        required: true
+        type: string
+      - description: sa_name
+        in: query
+        name: sa_name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "400":
+          description: code":400,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "404":
+          description: code":404,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "500":
+          description: code":500,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+      security:
+      - ApiKeyAuth: []
+      summary: DeleteSa
+      tags:
+      - DeleteSa
+  /sa/delns:
+    delete:
+      consumes:
+      - application/json
+      description: Delete ServiceAccount NameSpace
+      operationId: DeleteNs
+      parameters:
+      - description: Project_Name
+        in: query
+        name: project_name
+        required: true
+        type: string
+      - description: Cluster_Name
+        in: query
+        name: cluster_name
+        required: true
+        type: string
+      - description: Sa_Name
+        in: query
+        name: sa_name
+        required: true
+        type: string
+      - description: NameSpace
+        in: query
+        name: namespace
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "400":
+          description: code":400,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "404":
+          description: code":404,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "500":
+          description: code":500,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+      security:
+      - ApiKeyAuth: []
+      summary: DeleteNs
+      tags:
+      - DeleteNs
+  /sa/gettoken:
+    get:
+      consumes:
+      - application/json
+      description: Get SaToken For NameSpace
+      operationId: Gettoken
+      parameters:
+      - description: Project Name
+        in: query
+        name: project_name
+        required: true
+        type: string
+      - description: Cluster Name
+        in: query
+        name: cluster_name
+        required: true
+        type: string
+      - description: Ns_Name
+        in: query
+        name: ns_name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "400":
+          description: code":400,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "404":
+          description: code":404,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "500":
+          description: code":500,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+      security:
+      - ApiKeyAuth: []
+      summary: Gettoken
+      tags:
+      - Gettoken
+  /sa/list:
+    get:
+      consumes:
+      - application/json
+      description: List All ServiceAccount
+      operationId: ListSa
+      parameters:
+      - description: Project Name
+        in: query
+        name: project_name
+        required: true
+        type: string
+      - description: Cluster Name
+        in: query
+        name: cluster_name
+        required: true
+        type: string
+      - description: Sa Name
+        in: query
+        name: sa_name
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "400":
+          description: code":400,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "404":
+          description: code":404,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "500":
+          description: code":500,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+      security:
+      - ApiKeyAuth: []
+      summary: ListSa
+      tags:
+      - ListSa
+  /sa/listns:
+    get:
+      consumes:
+      - application/json
+      description: List All ServiceAccount's NameSpace
+      operationId: ListNs
+      parameters:
+      - description: Project Name
+        in: query
+        name: project_name
+        required: true
+        type: string
+      - description: Cluster Name
+        in: query
+        name: cluster_name
+        required: true
+        type: string
+      - description: Sa_Name
+        in: query
+        name: sa_name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "400":
+          description: code":400,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "404":
+          description: code":404,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "500":
+          description: code":500,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+      security:
+      - ApiKeyAuth: []
+      summary: ListNs
+      tags:
+      - ListNs
+  /sa/update:
+    put:
+      consumes:
+      - application/json
+      description: Update ServiceAccount SaToken
+      operationId: UpdateSa
+      parameters:
+      - description: Project_Name
+        in: query
+        name: project_name
+        required: true
+        type: string
+      - description: Cluster_Name
+        in: query
+        name: cluster_name
+        required: true
+        type: string
+      - description: Sa_Name
+        in: query
+        name: sa_name
+        required: true
+        type: string
+      - description: Update ServiceAccount Token
+        in: body
+        name: ReqeustBody
+        required: true
+        schema:
+          $ref: '#/definitions/serviceaccount.UpdateSaRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "400":
+          description: code":400,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "404":
+          description: code":404,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "500":
+          description: code":500,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+      security:
+      - ApiKeyAuth: []
+      summary: UpdateSaToken
+      tags:
+      - UpdateSaToken
+  /user/list:
+    get:
+      consumes:
+      - application/json
+      description: List User
+      operationId: ListUser
+      parameters:
+      - description: UserName
+        in: query
+        name: username
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "400":
+          description: code":400,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "404":
+          description: code":404,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "500":
+          description: code":500,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+      summary: ListUser
+      tags:
+      - ListUser
+  /user/login:
+    get:
+      consumes:
+      - application/json
+      description: User Login
+      operationId: Login
+      parameters:
+      - description: UserName
+        in: query
+        name: username
+        required: true
+        type: string
+      - description: PassWord
+        in: query
+        name: password
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "400":
+          description: code":400,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "404":
+          description: code":404,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "500":
+          description: code":500,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+      summary: Login
+      tags:
+      - Login
+  /user/register:
+    post:
+      consumes:
+      - application/json
+      description: Register User
+      operationId: RegisterUser
+      parameters:
+      - description: Register User
+        in: body
+        name: ReqeustBody
+        required: true
+        schema:
+          $ref: '#/definitions/user.CreateUserRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "400":
+          description: code":400,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "404":
+          description: code":404,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "500":
+          description: code":500,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+      summary: RegisterUser
+      tags:
+      - RegisterUser
+  /user/verifytoken:
+    get:
+      consumes:
+      - application/json
+      description: Verify Token
+      operationId: VerifyToken
+      parameters:
+      - description: token
+        in: query
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code":200,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "400":
+          description: code":400,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "404":
+          description: code":404,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+        "500":
+          description: code":500,"data":null,"msg":""}
+          schema:
+            $ref: '#/definitions/util.Res'
+      summary: VerifyToken
+      tags:
+      - VerifyToken
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

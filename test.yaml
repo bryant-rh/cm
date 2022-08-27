@@ -1,0 +1,105 @@
+--- 
+apiVersion: v1
+kind: Secret
+type: kubernetes.io/dockerconfigjson
+metadata:
+  name: sensorsdata-registry
+data:
+  .dockerconfigjson: "eyJhdXRocyI6eyJoYXJib3IuZXhhbXBsZS5jb20iOnt9fX0="
+
+
+
+
+
+
+--- 
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: cm
+  annotations: 
+    helmx/project: >-
+      {"name":"cm","version":"0.0.1","group":"infra","description":"cluset-mgr"}
+    helmx/upstreams: ""
+spec:
+  selector:
+    srv: cm
+  type: ClusterIP
+  ports:
+  - name: http-80
+    port: 80
+    targetPort: 80
+    protocol: TCP
+
+
+
+
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    "git.querycap.com/last-commit-by": "CI_COMMIT_REF_SLUG/GITLAB_USER_NAME/CI_COMMIT_SHA/CI_COMMIT_MESSAGE"
+  name: cm
+  labels:
+    app: cm
+    version: 0.0.1
+spec:
+  selector:
+    matchLabels:
+      srv: cm
+  template:
+    metadata:
+      labels:
+        srv: cm
+    spec:
+      containers:
+      - name: cm
+        resources:
+          requests:
+            cpu: 10m
+            memory: 10Mi
+          limits:
+            cpu: 500m
+            memory: 1024Mi
+        readinessProbe:
+          httpGet:
+            port: 80
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            port: 80
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        image: harbor.example.com/rk-infra/cm:0.0.1
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        env:
+        - name: CM_SERVER__DB_DSN
+          value: root:a8EyHxVuaZeS9J8cz@tcp(114.117.165.117:2330)/cluster_mgr?charset=utf8mb4&parseTime=True&loc=Local
+        - name: CM_SERVER__Server_LogFormatter
+          value: json
+        - name: CM_SERVER__Server_LogLevel
+          value: debug
+        - name: CM_SERVER__Server_Mode
+          value: debug
+        - name: CM_SERVER__Server_Port
+          value: "80"
+        - name: CM_SERVER__TestEnvStr
+          value: global.config
+        - name: GOENV
+          value: DEV
+      imagePullSecrets:
+      - name: sensorsdata-registry
+      dnsPolicy: ClusterFirst
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "2"

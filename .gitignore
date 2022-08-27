@@ -1,0 +1,15 @@
+.vscode
+.idea
+
+cmd/server/config/default.yml
+
+cmd/web/node_modules/
+cmd/web/.pnp
+cmd/web/.pnp.js
+# production
+cmd/web/build/
+
+# testing
+cmd/web/coverage
+
+

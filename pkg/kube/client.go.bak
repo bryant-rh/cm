@@ -1,0 +1,101 @@
+package kube
+
+import (
+	"cm/cmd/client/global"
+	"errors"
+	"fmt"
+
+	"k8s.io/apimachinery/pkg/runtime/schema"
+	"k8s.io/cli-runtime/pkg/resource"
+	"k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/rest"
+	"k8s.io/klog/v2"
+)
+
+const (
+	defaultApiUriPath  = "/api"
+	defaultApisUriPath = "/apis"
+)
+
+var ErrorMissingNamespace = errors.New("missing namespace")
+
+// Client represents kubernetes Client.
+type Client struct {
+	Client    kubernetes.Interface
+	InCluster bool
+}
+
+// NewDefault returns a new Client with default kubeconfig.
+func NewDefault() *Client {
+	//flags := genericclioptions.NewConfigFlags(UsePersistentConfig)
+	return &Client{InCluster: false}
+}
+
+// NewInCluster returns a new Client with InClusterConfig.
+func NewInCluster() *Client {
+	return &Client{InCluster: true}
+}
+
+// RestConfig returns a complete rest client config.
+func (c *Client) RestConfig() (*rest.Config, error) {
+	var (
+		cfg *rest.Config
+		err error
+	)
+	if c.InCluster {
+		cfg, err = rest.InClusterConfig()
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		if len(global.KUBE_TUNNEL_GATEWAY_HOST) == 0 {
+			klog.Fatalf("请在目录:[%s] 创建配置文件: [cm.yaml], 配置 KUBE_TUNNEL_GATEWAY_HOST 或者配置对应环境变量\n", global.Paths.BasePath())
+
+			return nil, rest.ErrNotInCluster
+		}
+
+		host := fmt.Sprintf("%s/proxies/%s", global.KUBE_TUNNEL_GATEWAY_HOST, global.ClusterName)
+		cfg = &rest.Config{
+			// TODO: switch to using cluster DNS.
+			Host:        host,
+			BearerToken: global.KubeBearerToken,
+			TLSClientConfig: rest.TLSClientConfig{
+				Insecure: true,
+			},
+		}
+
+	}
+
+	return cfg, nil
+}
+
+/// Dial returns a client to the kubernetes apiserver.
+func (c *Client) Dial() (kubernetes.Interface, error) {
+	if c.Client != nil {
+		return c.Client, nil
+	}
+	cfg, err := c.RestConfig()
+	if err != nil {
+		return nil, err
+	}
+	if c.Client, err = kubernetes.NewForConfig(cfg); err != nil {
+		return nil, err
+	}
+	return c.Client, nil
+}
+
+// ResourceClient returns a client to the given schema.GroupVersion.
+func (c *Client) ResourceClient(gv schema.GroupVersion) (rest.Interface, error) {
+	cfg, err := c.RestConfig()
+	if err != nil {
+		return nil, err
+	}
+	cfg.ContentConfig = resource.UnstructuredPlusDefaultContentConfig()
+	cfg.GroupVersion = &gv
+	if len(gv.Group) == 0 {
+		cfg.APIPath = defaultApiUriPath
+	} else {
+		cfg.APIPath = defaultApisUriPath
+	}
+	return rest.RESTClientFor(cfg)
+}
