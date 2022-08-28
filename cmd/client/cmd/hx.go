@@ -15,6 +15,7 @@ import (
 func NewCmdHx() *cobra.Command {
 	hxCmd := &cobra.Command{
 		Use: "hx",
+		Short: "用于初始化项目，部署服务",
 		PersistentPreRun: func(cmd *cobra.Command, args []string) {
 			if global.ImagePullSecret == "" {
 				global.ImagePullSecret = "sensorsdata-registry://harbor.example.com/rk-"

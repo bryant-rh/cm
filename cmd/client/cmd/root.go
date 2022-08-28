@@ -19,42 +19,12 @@ import (
 	"k8s.io/klog/v2"
 )
 
-var (
-	// set values via build flags
-	version string
 
-	//commit                      string
-	// supportedMetricsAPIVersions = []string{
-	// 	"v1beta1",
-	// }
-	// topLong = templates.LongDesc(i18n.T(`
-	// 	Display Resource (cpu/memory/gpu/podcount) Usage and Request and Limit.
-	// 	The resource command allows you to see the resource consumption for nodes or pods.
-	// 	This command requires Metrics Server to be correctly configured and working on the server. `))
-	// rolesumExample = templates.Examples(i18n.T(`
-	//    node        Display Resource (cpu/memory/gpu/podcount) usage of nodes
-	//    pod         Display Resource (cpu/memory/gpu)          usage of pods`))
-)
-
-// func runHelp(cmd *cobra.Command, args []string) {
-// 	cmd.Help()
-// }
-
-// versionString returns the version prefixed by 'v'
-// or an empty string if no version has been populated by goreleaser.
-// In this case, the --version flag will not be added by cobra.
-func versionString() string {
-	if len(version) == 0 {
-		return ""
-	}
-	return "v" + version
-}
 
 func NewCmd() *cobra.Command {
 	// rootCmd represents the base command when called without any subcommands
 	rootCmd := &cobra.Command{
 		Use:     "cm", // This is prefixed by kubectl in the custom usage template
-		Version: versionString(),
 		Short:   "cm is a tool for managing k8s clusters",
 		Long: `cm is a tool for managing k8s clusters.
 You can invoke cm through comand: "cm [command]..."`,
@@ -69,6 +39,7 @@ You can invoke cm through comand: "cm [command]..."`,
 	global.CMClient = client.NewGithubClient(global.CM_SERVER_BASEURL)
 	global.ProxyClient = client.NewGithubClient(global.KUBE_TUNNEL_GATEWAY_HOST)
 
+	rootCmd.AddCommand(NewCmdVersion())
 	rootCmd.AddCommand(NewCmdGet())
 	rootCmd.AddCommand(NewCmdCreate())
 	rootCmd.AddCommand(NewCmdUpdate())

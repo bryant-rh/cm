@@ -1,0 +1,133 @@
+# Source: gateway/templates/secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: kube-gateway-secret
+  namespace: infra
+type: Opaque
+data:
+  publicKey: LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUE3NndHR3pxbnlIbExteWVjV1RnZwoydUlzM1hiRGVJU2Y0Qk5ocDhUUE9sdm5hcWd5NUQ2SEd6Q3RscmViZTZLRXMwSXA4QVRVT0VwNHNKVyt3MUo5CnBHT1ZxR0ZvaTRUM3A0WXY2Nys3dGR3cEdHWDZPSm1RMG1kQzR3M3RiT0YzaUpUNytWSjNXT1V0WlJ5cERHcFAKWVZtWVhYREQ5em1GYXA4WTNaSlhBT1JqSCtTZkpCakYxd3YzRXJoeExTQ1daVVYxdy96ekhvSUlZUWgreFpzKwp5ZDdzSXdzSlhUZEQ5ZWVkcm5Fb2NXYlFVZGRNdjgxdkpLRjBMclpKcHRlSWwySEF5MVFQaHpyT0VrTkpMekhWCnE3cHoyMTQ4T0pTVmVYRTZGVjBWSTRWRVBacjY5SEdiVW8xWEZjL0YyaVk4SSt6aWVBTXJGNzlIWEw1ang1UDMKZndJREFRQUIKLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0tCg==
+  privateKey: TFMwdExTMUNSVWRKVGlCU1UwRWdVRkpKVmtGVVJTQkxSVmt0TFMwdExRcE5TVWxGY0ZGSlFrRkJTME5CVVVWQk56WjNSMGQ2Y1c1NVNHeE1iWGxsWTFkVVoyY3lkVWx6TTFoaVJHVkpVMlkwUWs1b2NEaFVVRTlzZG01aGNXZDVDalZFTmtoSGVrTjBiSEpsWW1VMlMwVnpNRWx3T0VGVVZVOUZjRFJ6U2xjcmR6RktPWEJIVDFaeFIwWnZhVFJVTTNBMFdYWTJOeXMzZEdSM2NFZEhXRFlLVDBwdFVUQnRaRU0wZHpOMFlrOUdNMmxLVkRjclZrb3pWMDlWZEZwU2VYQkVSM0JRV1ZadFdWaFlSRVE1ZW0xR1lYQTRXVE5hU2xoQlQxSnFTQ3RUWmdwS1FtcEdNWGQyTTBWeWFIaE1VME5YV2xWV01YY3ZlbnBJYjBsSldWRm9LM2hhY3l0NVpEZHpTWGR6U2xoVVpFUTVaV1ZrY201RmIyTlhZbEZWWkdSTkNuWTRNWFpLUzBZd1RISmFTbkIwWlVsc01raEJlVEZSVUdoNmNrOUZhMDVLVEhwSVZuRTNjSG95TVRRNFQwcFRWbVZZUlRaR1ZqQldTVFJXUlZCYWNqWUtPVWhIWWxWdk1WaEdZeTlHTW1sWk9Fa3JlbWxsUVUxeVJqYzVTRmhNTldwNE5WQXpabmRKUkVGUlFVSkJiMGxDUVVGUEszSkdia0ZyVGpaU1FuQXhiUXBCVVhScU1WSXJWMkZTTUUxMlowVnJSVlowZFRob1pYTXJOQzkwTXpZdlN6aFJRMllyV0hoNlVtdE5WVzB4YkZSTlRDdGpVMUYwTTBJNWJscFZRV3g1Q2xSWmFTOTNWR0pSVmpSYVNpOHhaM1YxTmk5cFlVNHhSMGxoYVRGNEt6WmFjVlU0TlVaM2IzbHJkR28xV0hKNFZYbFpiRmw1Y0dOaGMzTkxkekJuVkVNS1ltVklSSGd6YlRrM1MwOUtTRFJoT1ZneGFFeEtRbWhUVFZGdVUyWXZkbTB6S3pKMkx6UXdiSGRHUmpGb1pYWnBNMlZtZGxwcldVdHZaVFZJWkRkcWRncExNa05PWXpFeFMyVXdXRVZvTmxGSVEwUjJXVGRZVFUwMmEwbGhUSHBMYkhOQ2JVbG1VMVZuUVU5b1kzSlBlSFJvZEhKbE5UZEJia0pZUWxSYWRrTnFDa0YyYTBGVlVWTkxTVkJ4TjFCblJqQmpPRmxPUnpKcFVFUkhNV0ZxWXpONmR6UkhWeXR5VHpKdWRtRlRZMFpvTTJONk1rWXpkRzlEU0doYVdGVlZPSGdLY0VZeE0zZEJSVU5uV1VWQkwxUXlkVlZVU2pZMlFVSjNhRkZ0U0ZjMWJHcHFNelpaS3pWV2NrVkhRM0pPT1U5V2FHVk1hRlZzU3poWVVVNHZlR0o2ZFFwSlJGcHdWSEZVUlhoT1NHMUdVMjlIVUdkU05IRjVhVk5KVUVoeFprUXlkMnBoZERSSmJtWnBTRVZQYml0clpXNU5hVVZVUTFab1Mwd3hlR05qUVdWMUNsRldlamwzVEVkcmFGSXpiMVozVUZreVJVbEZXbkpGWXpKV2NtZzNTMWN5TVdZemVrRmFaazQxTDFVeFIybHhPV3hwYWl0Sk1HTkRaMWxGUVRocmFDOEtWMDB5YVdwdk1VbEdSSFUzVUZSdFMyeEVUbGszVGtwWU5VbE9PVlZJVHpVMVVGTkZPR05sYzJGM0sxZzJXSGxsUlhkamVpOUJjMVpFT1RWcldpOUxXUXBZZFRCMlIwcFVSakJUVm0xbGVVdExTMDVLTkN0dkwwVnFWekZrUVhOblprMUJNVTFUZUhsdE5EQm1lbTVSVWtwQ1dIYzNSeTlyWWxWUGRtVkplR3hrQ25oV2RrOUpabFZpTUcwMlZVaHVjRGhsVDJWNWVVOW1NMUJSVlhkUk5VWkVObVJsVDJSbmEwTm5XVVZCYnpaeVpHOXVVM2h2YjJaSFRWQlZOMjFwVUVVS2FVNVZWa2x0VVhKVlpWcHZVV2xvY0VaeFRGQmFWbXMzYWtKSVlUTnVNa0Z0VTJ0U1dHeGFNMHBaTVZNeWNFeFRabVp3T1RCdlJHbEZTa1JLVERSeVpncE9TRU5DYzBOVmVUWlliVUZqZFRCclZHVXlObFVyZGxBMWJGRllSMmREWTNsdWJrUk9iWEZhU0dJNU5tcGxTbUZ1TUc1eVpHdE5OV3htUWpZeU1uTjFDbWMxWTJoSGQwb3habFpwYnk5VlVuRlRNRmx5UjJKclEyZFpSVUZxTTFseFNXUlZlR2xwVGxOTFRtcDBiQ3RWTkdveVUxRktWSEYyTTBwdFdGaEZiMHNLUzNVME1uZHJkWFphYmpKSVVVUlJVVVJqYUZsSFkyZGxTWEJXVnpoek5FNU9lbWhQYVUxdFprVkxZVXQwYVV4UWJVUm9OR1JxVlcwNU1qbHZaMkp6Y0FvM1NGRlVWblUyVTFNd1dsSnNRVzU2YVhoSWVXeHBLemcwZGl0dVQzcFdURGwzTjFSVlpuZHVRekJXTmpRd2F6TTFkMlZpVERaa1lrZEpRelJCVjNCRkNuZHVVbTAwVEVWRFoxbEZRVzVzTWpSd1ZVZEhiMWR5ZEV0WVV6UjZORGN3WW1OU1VYb3lVRnBMVEU1VE0zUnBVbkpxUkU5VEx6QkVRVWRoVjBobGF5OEtSRVprU0VOU1IweDRVVmx5T1RGWk5XcElUV3BaUm1WVmIwUnhRMkk1VVc5U1EzTkZkM0JaZWt0aU5VOUVMM2RrWVhSVldITklibGN3VEVSeVozTlRVd3BOTkM5cmIwZDBZUzloVW1Oa01sUllOWFJuV2tGWGMyMXFNWGxCYWt3dlQxUldZbnB4YzFwaU1WcEZVVFZhT0hJeVZFSTNMMk5WUFFvdExTMHRMVVZPUkNCU1UwRWdVRkpKVmtGVVJTQkxSVmt0TFMwdExRbz0K
+---
+# Source: gateway/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: kube-gateway
+  namespace: infra
+spec:
+  selector:
+    app: kube-gateway
+  type: ClusterIP
+  ports:
+  - name: http-80
+    port: 80
+    targetPort: 80
+    protocol: TCP
+  - name: http-8000
+    port: 8000
+    targetPort: 8000
+    protocol: TCP
+---
+# Source: gateway/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-gateway
+  namespace: infra
+spec:
+  selector:
+    matchLabels:
+      app: kube-gateway
+  replicas:
+  template:
+    metadata:
+      labels:
+        app: kube-gateway
+    spec:
+      containers:
+      - name: kube-gateway
+        resources:
+          requests:
+            cpu: 0.1
+            memory: 100Mi
+          limits:
+            cpu: 1
+            memory:  500Mi
+        readinessProbe:
+          httpGet:
+            port: 80
+            path: /console/status
+            scheme: HTTP
+          initialDelaySeconds: 10
+          timeoutSeconds: 1
+          periodSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            port: 80
+            path: /console/status
+            scheme: HTTP
+          initialDelaySeconds: 10
+          timeoutSeconds: 1
+          periodSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
+        image: bryantrh/kube-tunnel-gateway:v1.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        - containerPort: 8000
+          protocol: TCP
+        env:
+          - name: KUBE_GATEWAY__LogConfig_Formatter
+            value: "json"
+          - name: KUBE_GATEWAY__LogConfig_Level
+            value: "debug"
+          - name: KUBE_GATEWAY__Opt_Port
+            value: "80"
+          - name: KUBE_GATEWAY__Opt_ServiceName
+            value: "kube-gateway"
+
+          - name: KUBE_GATEWAY__Opt_JwtRsa_PublicKey
+            valueFrom:
+              secretKeyRef:
+                name: kube-gateway-secret
+                key: publicKey
+                optional: false
+          - name: KUBE_GATEWAY__Opt_JwtRsa_PrivateKey
+            valueFrom:
+              secretKeyRef:
+                name: kube-gateway-secret
+                key: privateKey
+                optional: false
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+---
+# Source: gateway/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name:  kube-gateway
+  namespace: infra
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: kube-tunnel-gateway.example.cn
+      http:
+          paths:
+            - backend:
+                service:
+                  name: kube-gateway
+                  port:
+                    number: 80
+              path: /
+              pathType: Prefix
+  tls:
+      - hosts:
+        - kube-tunnel-gateway.example.cn
+        secretName: nginx-tls

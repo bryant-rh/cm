@@ -2,6 +2,5 @@ CM_SERVER__DB_DSN: root:a8EyHxVuaZeS9J@tcp(127.0.0.1:3306)/cluster_mgr?charset=u
 CM_SERVER__Server_LogFormatter: json
 CM_SERVER__Server_LogLevel: debug
 CM_SERVER__Server_Mode: debug
-CM_SERVER__Server_Port: "80"
 CM_SERVER__TestEnvStr: global.config
 GOENV: DEV

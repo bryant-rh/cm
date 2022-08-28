@@ -1,0 +1,122 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+ name: infra
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cm-server
+  namespace: infra
+  annotations: 
+    helmx/project: >-
+      {"name":"cm-server","version":"0.0.1","group":"infra","description":"cluster-mgr"}
+    helmx/upstreams: ""
+spec:
+  selector:
+    srv: cm-server
+  type: ClusterIP
+  ports:
+  - name: http-80
+    port: 80
+    targetPort: 80
+    protocol: TCP
+
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    "git.querycap.com/last-commit-by": "CI_COMMIT_REF_SLUG/GITLAB_USER_NAME/CI_COMMIT_SHA/CI_COMMIT_MESSAGE"
+  name: cm-server
+  namespace: infra
+  labels:
+    app: cm-server
+    version: 0.0.1
+spec:
+  selector:
+    matchLabels:
+      srv: cm-server
+  template:
+    metadata:
+      labels:
+        srv: cm-server
+    spec:
+      containers:
+      - name: cm-server
+        resources:
+          requests:
+            cpu: 2000m
+            memory: 2048Mi
+          limits:
+            cpu: 2000m
+            memory: 2048Mi
+        readinessProbe:
+          httpGet:
+            port: 80
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            port: 80
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        image: bryant-rh/cm-server:0.0.1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        env:
+        - name: CM_SERVER__DB_DSN
+          value: root:a8EyHxVuaZeS9J@tcp(mysql.middleware:3306)/cluster_mgr?charset=utf8mb4&parseTime=True&loc=Local
+        - name: CM_SERVER__Server_LogFormatter
+          value: json
+        - name: CM_SERVER__Server_LogLevel
+          value: debug
+        - name: CM_SERVER__Server_Mode
+          value: debug
+        - name: CM_SERVER__Server_Port: 
+          value: "80"
+        - name: CM_SERVER__Default_UserName: 
+          value: "admin"
+        - name: CM_SERVER__Default_PassWord: 
+          value: "123456"
+        - name: CM_SERVER__TestEnvStr
+          value: global.config
+        - name: GOENV
+          value: DEV
+      dnsPolicy: ClusterFirst
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "2"
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name:  cm-server
+  namespace: infra
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: cm-server.example.cn
+      http:
+          paths:
+            - backend:
+                service:
+                  name: cm-server
+                  port:
+                    number: 80
+              path: /
+              pathType: Prefix
+  # tls:
+  #     - hosts:
+  #       - kube-gateway-test.sensorsdata.cn
+  #       secretName: nginx-tls
