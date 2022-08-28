@@ -12,8 +12,14 @@ jobs:
       uses: actions/setup-go@v1
       with:
         go-version: 1.18
+    - name: 设置私有仓库和GoProxy
+        run: |
+          go env -w GOPRIVATE="github.com/kunlun-qilian"
+#         如果你有 github 的私有库,请自行设置 GOPRIVATE 示例如下,注下面的 UserName 是用户名,例如:xhyonline,而不是你登录 Github 的邮箱
+          git config --global url."https://${{ secret.UserName }}:${{secret.Token}}@github.com".insteadOf  "https://github.com"
+          go mod tidy
     - name: GoReleaser
       uses: goreleaser/goreleaser-action@v1
       with:
         version: latest
-        args: release --snapshot --rm-dist
+        args: release --snapshot --rm-distf

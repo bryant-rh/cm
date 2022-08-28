@@ -1,5 +1,5 @@
 
-FROM docker.io/library/golang:1.18-buster AS build-env
+FROM docker.io/library/golang:1.17-buster AS build-env
 
 FROM build-env AS builder
 
@@ -13,8 +13,8 @@ RUN make build WORKSPACE=server
 FROM alpine
 COPY --from=builder /go/src/cmd/server/server /go/bin/cm-server
 
-EXPOSE 80
 COPY --from=builder /go/src/cmd/server/openapi.json /go/bin/openapi.json
+EXPOSE 80
 
 ARG PROJECT_NAME
 ARG PROJECT_VERSION
