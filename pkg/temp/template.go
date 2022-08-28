@@ -111,7 +111,7 @@ func Makefile() []byte {
 	_, _ = fmt.Fprint(makefile, `
 PKG = $(shell cat go.mod | grep "^module " | sed -e "s/module //g")
 NAME = $(shell basename $(PKG))
-VERSION = v$(cat helmx.project.yml|grep version|awk -F : '{print $2}'|tr -d " ")
+VERSION = $(cat helmx.project.yml|grep version|awk -F : '{print $$2}'|tr -d " ")
 COMMIT_SHA ?= $(shell git rev-parse --short HEAD)
 GOOS ?= $(shell go env GOOS)
 GOARCH ?= $(shell go env GOARCH)
