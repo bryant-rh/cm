@@ -1,10 +1,30 @@
-package docker
+package temp
 
 import (
 	"bytes"
 	"fmt"
 	"path/filepath"
 )
+
+func Helmxfile() []byte {
+	helmxyml := bytes.NewBuffer(nil)
+
+	_, _ = fmt.Fprintln(helmxyml, `
+service:
+ports:
+  - "80"
+readinessProbe:
+  action: http://:80
+  initialDelaySeconds: 5
+  periodSeconds: 5
+livenessProbe:
+  action: http://:80
+  initialDelaySeconds: 5
+  periodSeconds: 5
+
+	`)
+	return helmxyml.Bytes()
+}
 
 func Dockerfile(language, service_name string) []byte {
 	dockerfile := bytes.NewBuffer(nil)

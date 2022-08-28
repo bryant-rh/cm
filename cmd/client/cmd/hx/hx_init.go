@@ -1,14 +1,15 @@
 package hx
 
 import (
-	"github.com/bryant-rh/cm/cmd/client/global"
-	"github.com/bryant-rh/cm/pkg/docker"
-	"github.com/bryant-rh/cm/pkg/helmx"
-	"github.com/bryant-rh/cm/pkg/util"
 	"fmt"
 	"os"
 	"path"
 	"strings"
+
+	"github.com/bryant-rh/cm/cmd/client/global"
+	"github.com/bryant-rh/cm/pkg/helmx"
+	"github.com/bryant-rh/cm/pkg/temp"
+	"github.com/bryant-rh/cm/pkg/util"
 
 	"github.com/go-courier/helmx/spec"
 	"github.com/spf13/cobra"
@@ -119,14 +120,19 @@ func NewCmdHxInit() *cobra.Command {
 			case util.Exists("./requirements.txt"):
 				file_type = "python"
 			}
+			fmt.Println(util.GreenColor("生成helmx.yml"))
+			_ = util.WriteToFile("./helmx.yml", temp.Helmxfile(), func(v interface{}) ([]byte, error) {
+				return v.([]byte), nil
+			})
+
 			fmt.Println(util.GreenColor("生成dockerfile.default"))
-			_ = util.WriteToFile("./Dockerfile.default", docker.Dockerfile(file_type, global.Ctx.Project.Name), func(v interface{}) ([]byte, error) {
+			_ = util.WriteToFile("./Dockerfile.default", temp.Dockerfile(file_type, global.Ctx.Project.Name), func(v interface{}) ([]byte, error) {
 				return v.([]byte), nil
 			})
 
 			if file_type == "go" {
 				fmt.Println(util.GreenColor("生成Makefile.default"))
-				_ = util.WriteToFile("./Makefile.default", docker.Makefile(), func(v interface{}) ([]byte, error) {
+				_ = util.WriteToFile("./Makefile.default", temp.Makefile(), func(v interface{}) ([]byte, error) {
 					return v.([]byte), nil
 				})
 

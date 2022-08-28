@@ -1,20 +1,14 @@
-service:
-  ports:
-    - 80
-  readinessProbe:
-    action: http://:80
-    initialDelaySeconds: 5
-    periodSeconds: 5
-  livenessProbe:
-    action: http://:80
-    initialDelaySeconds: 5
-    periodSeconds: 5
 
-# jobs:
-#   doonce:
-#     image: busybox
-#     backoffLimit: 2
-#   dosomecron:
-#     image: busybox
-#     cron:
-#       schedule: "*/1 * * * *"
+service:
+ports:
+  - "80"
+readinessProbe:
+  action: http://:80
+  initialDelaySeconds: 5
+  periodSeconds: 5
+livenessProbe:
+  action: http://:80
+  initialDelaySeconds: 5
+  periodSeconds: 5
+
+	

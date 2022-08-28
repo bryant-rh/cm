@@ -13,8 +13,8 @@ RUN make build WORKSPACE=server
 FROM alpine
 COPY --from=builder /go/src/cmd/server/server /go/bin/cm-server
 
-EXPOSE 80
 COPY --from=builder /go/src/cmd/server/openapi.json /go/bin/openapi.json
+EXPOSE 80
 
 ARG PROJECT_NAME
 ARG PROJECT_VERSION

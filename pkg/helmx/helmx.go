@@ -192,6 +192,7 @@ func setDefaults(s *spec.Spec) {
 			},
 		}
 		s.Service.DNSPolicy = "ClusterFirst"
+		s.Service.Container.ImagePullPolicy = "IfNotPresent"
 
 		if s.Service.ImagePullSecret == nil {
 			v := os.Getenv("IMAGE_PULL_SECRET")
