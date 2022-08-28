@@ -13,7 +13,6 @@ RUN make build WORKSPACE=cm
 FROM alpine
 COPY --from=builder /go/src/cmd/cm/cm /go/bin/cm
 
-
 EXPOSE 80
 ARG PROJECT_NAME
 ARG PROJECT_VERSION

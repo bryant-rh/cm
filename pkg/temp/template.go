@@ -9,20 +9,19 @@ import (
 func Helmxfile() []byte {
 	helmxyml := bytes.NewBuffer(nil)
 
-	_, _ = fmt.Fprintln(helmxyml, `
+	_, _ = fmt.Fprint(helmxyml, 
+`
 service:
-ports:
-  - "80"
-readinessProbe:
-  action: http://:80
-  initialDelaySeconds: 5
-  periodSeconds: 5
-livenessProbe:
-  action: http://:80
-  initialDelaySeconds: 5
-  periodSeconds: 5
-
-	`)
+  ports:
+    - "80"
+  readinessProbe:
+    action: http://:80
+    initialDelaySeconds: 5
+    periodSeconds: 5
+  livenessProbe:
+    action: http://:80
+    initialDelaySeconds: 5
+    periodSeconds: 5`)
 	return helmxyml.Bytes()
 }
 
@@ -31,7 +30,7 @@ func Dockerfile(language, service_name string) []byte {
 
 	switch {
 	case language == "go":
-		_, _ = fmt.Fprintln(dockerfile, `
+		_, _ = fmt.Fprint(dockerfile, `
 FROM docker.io/library/golang:1.18-buster AS build-env
 
 FROM build-env AS builder
@@ -57,7 +56,7 @@ ENTRYPOINT ["`+filepath.Join(`/go/bin`, service_name)+`"]
 `)
 
 	case language == "java":
-		_, _ = fmt.Fprintln(dockerfile, `
+		_, _ = fmt.Fprint(dockerfile, `
 # First stage: complete build environment
 FROM maven:3.5.0-jdk-8-alpine AS builder
 # add pom.xml and source code
@@ -84,7 +83,7 @@ ENV PROJECT_NAME=${PROJECT_NAME} PROJECT_VERSION=${PROJECT_VERSION}
 CMD ["java", "-jar", "`+filepath.Join(`/java/bin`, service_name)+`-app-1.0-SNAPSHOT.jar`+`"]
 `)
 	case language == "python":
-		_, _ = fmt.Fprintln(dockerfile, `
+		_, _ = fmt.Fprint(dockerfile, `
 FROM python:3.9-alpine as base
 FROM base as builder
 COPY requirements.txt /requirements.txt
@@ -109,7 +108,7 @@ ENTRYPOINT ["python3", "demo.py"]
 func Makefile() []byte {
 	makefile := bytes.NewBuffer(nil)
 
-	_, _ = fmt.Fprintln(makefile, `
+	_, _ = fmt.Fprint(makefile, `
 PKG = $(shell cat go.mod | grep "^module " | sed -e "s/module //g")
 NAME = $(shell basename $(PKG))
 VERSION = v$(cat helmx.project.yml|grep version|awk -F : '{print $2}'|tr -d " ")
