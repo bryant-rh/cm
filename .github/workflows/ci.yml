@@ -15,7 +15,7 @@ jobs:
     - name: 设置私有仓库和GoProxy
       run: |
         go env -w GOPRIVATE="github.com/kunlun-qilian"
-        git config --global url."https://${{ secret.UserName }}:${{secret.Token}}@github.com".insteadOf  "https://github.com"
+        git config --global url."https://${{ secrets.UserName }}:${{secrets.Token}}@github.com".insteadOf  "https://github.com"
         go mod tidy
     - name: GoReleaser
       uses: goreleaser/goreleaser-action@v1
