@@ -15,7 +15,7 @@
         },
         "version": "1.0"
     },
-    "host": "localhost:8080",
+    "host": "localhost:80",
     "basePath": "/api/v1",
     "paths": {
         "/cluster/create": {

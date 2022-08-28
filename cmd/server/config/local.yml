@@ -1,4 +1,4 @@
-CM_SERVER__DB_DSN: root:a8EyHxVuaZeS9J8cz@tcp(114.117.165.117:23306)/cluster_mgr?charset=utf8mb4&parseTime=True&loc=Local
+CM_SERVER__DB_DSN: root:ieh2Pohque4Ahpheeng6@tcp(114.117.165.117:23306)/cluster_mgr?charset=utf8mb4&parseTime=True&loc=Local
 CM_SERVER__Server_LogFormatter: json
 CM_SERVER__Server_LogLevel: debug
 CM_SERVER__Server_Mode: debug

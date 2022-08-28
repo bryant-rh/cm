@@ -1,9 +1,10 @@
 package cmd
 
 import (
+	"os"
+
 	"github.com/bryant-rh/cm/cmd/client/global"
 	"github.com/bryant-rh/cm/pkg/helmx"
-	"os"
 
 	hxc "github.com/bryant-rh/cm/cmd/client/cmd/hx"
 
@@ -152,11 +153,6 @@ func NewCmdHx() *cobra.Command {
 	hxCmd.AddCommand(hxc.NewCmdHxInit())
 	hxCmd.AddCommand(hxc.NewCmdHxApply())
 	hxCmd.AddCommand(hxc.NewCmdHxCreateProxy())
+	hxCmd.AddCommand(hxc.NewCmdHxCreateKubeConfig())
 	return hxCmd
 }
-
-// func Execute() {
-// 	if err := cmdRoot.Execute(); err != nil {
-// 		panic(err)
-// 	}
-// }
