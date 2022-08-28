@@ -21,4 +21,4 @@ jobs:
       uses: goreleaser/goreleaser-action@v1
       with:
         version: latest
-        args: release --snapshot --rm-distf
+        args: release --snapshot --rm-dist
