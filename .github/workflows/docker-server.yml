@@ -3,8 +3,7 @@ name: docker-server
 on:
   push:
     paths:
-     # - 'Dockerfile.server'
-      - 'cmd/server'
+      - 'cmd/server/Dockerfile'
 #      - .version
 
 
