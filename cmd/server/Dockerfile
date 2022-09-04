@@ -16,6 +16,7 @@ RUN go env -w GOPRIVATE="github.com/kunlun-qilian" && \
 FROM alpine
 COPY --from=builder /go/src/cmd/server/server /go/bin/cm-server
 #COPY --from=builder /go/src/cmd/server/openapi.json /go/bin/openapi.json
+
 EXPOSE 80
 
 ARG PROJECT_NAME
