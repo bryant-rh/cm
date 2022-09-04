@@ -61,9 +61,6 @@ docker.server:
 		.
 
 
-tidy:
-	go mod tidy
-
 gen-openapi:
 	swag init --pd -d ./cmd/server -o ./cmd/server/docs
 
