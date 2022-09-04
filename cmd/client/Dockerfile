@@ -13,7 +13,7 @@ RUN go env -w GOPRIVATE="github.com/kunlun-qilian" && \
     make build WORKSPACE=client
 
 # runtime
-FROM hub-dev.rockontrol.com/docker.io/library/nginx:1.19.3-alpine
+FROM docker.io/library/nginx:1.19.3-alpine
 
 #EXPOSE 80
 
