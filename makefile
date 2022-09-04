@@ -13,14 +13,38 @@ Github_Token ?=
 
 WORKSPACE ?= name
 
-build: 
+clean:
+	rm -rf ./cmd/$(WORKSPACE)/out
+
+upgrade:
+	go get -u ./...
+
+tidy:
+	go mod tidy
+
+build.cm.server: 
 	cd ./cmd/$(WORKSPACE) && $(GOBUILD)
+
+
+build: tidy
+	$(MAKE) build.cm tar.cm GOOS=linux GOARCH=amd64
+	$(MAKE) build.cm tar.cm GOOS=linux GOARCH=arm64
+
+
+build.cm:
+	cd ./cmd/$(WORKSPACE) && $(GOBUILD) -o ./out/cm-$(GOOS)-$(GOARCH)
+
+tar.cm:
+	cd ./cmd/$(WORKSPACE) && tar -czf ./out/cm-$(GOOS)-$(GOARCH).tar.gz -C ./out/ cm-$(GOOS)-$(GOARCH)
+
+install: build.cm
+	mv ./cmd/$(WORKSPACE)/out/cm-$(GOOS)-$(GOARCH) ${GOPATH}/bin/cm
 
 docker.client:
 	docker buildx build --push --progress plain --platform=${PLATFORM}	\
 		--cache-from "type=local,src=/tmp/.buildx-cache" \
 		--cache-to "type=local,dest=/tmp/.buildx-cache" \
-		--file=Dockerfile.client \
+		--file=./cmd/client/Dockerfile \
 		--tag=bryantrh/cm:${VERSION}-${COMMIT_SHA} \
 		--build-arg=Github_UserName=${Github_UserName}	\
 		--build-arg=Github_Token=${Github_Token}	\
@@ -30,7 +54,7 @@ docker.server:
 	docker buildx build --push --progress plain --platform=${PLATFORM}	\
 		--cache-from "type=local,src=/tmp/.buildx-cache" \
 		--cache-to "type=local,dest=/tmp/.buildx-cache" \
-		--file=Dockerfile.server \
+		--file=./cmd/server/Dockerfile \
 		--tag=bryantrh/cm-server:${VERSION}-${COMMIT_SHA} \
 		--build-arg=Github_UserName=${Github_UserName}	\
 		--build-arg=Github_Token=${Github_Token}	\

@@ -1,4 +1,4 @@
-package helmx
+package hxctx
 
 import (
 	"bytes"
@@ -11,8 +11,6 @@ import (
 	"strings"
 
 	"github.com/bryant-rh/cm/cmd/client/global"
-
-	//"github.com/davecgh/go-spew/spew"
 	"github.com/go-courier/helmx"
 	"github.com/go-courier/helmx/kubetypes"
 	"github.com/go-courier/helmx/spec"
@@ -23,11 +21,11 @@ type DeployOpt struct {
 	DryRun bool
 }
 
-func CommandForDeploy(c *global.Context) (namespace, data string) {
-	namespace = strings.ToLower(c.Project.Group)
+func CommandForDeploy(w *Workspace) (namespace, data string) {
+	namespace = strings.ToLower(w.Project.Group)
 
-	if c.Environment != "" && c.Environment != "online" {
-		namespace = namespace + "--" + c.Environment
+	if w.DeployEnv != "" && w.DeployEnv != "online" {
+		namespace = namespace + "--" + w.DeployEnv
 	}
 
 	namespace = strings.ToLower(namespace)
@@ -38,7 +36,7 @@ func CommandForDeploy(c *global.Context) (namespace, data string) {
 	istioEnabled := false
 	buf := bytes.NewBuffer(nil)
 
-	executeAll(buf, c, istioEnabled)
+	executeAll(buf, w, istioEnabled)
 
 	if buf.Len() == 0 {
 		return namespace, `echo nothing to deploy`
@@ -90,9 +88,9 @@ func quoteWith(s string) string {
 	return replaceWithGitlabEnv(buf.String())
 }
 
-func executeAll(writer io.Writer, c *global.Context, istioEnabled bool) {
+func executeAll(writer io.Writer, w *Workspace, istioEnabled bool) {
 	hx := helmx.NewHelmX()
-	hx.Spec = c.Spec
+	hx.Spec = w.Spec
 
 	hx.Envs = map[string]string{}
 
@@ -112,10 +110,9 @@ func executeAll(writer io.Writer, c *global.Context, istioEnabled bool) {
 	// 	hx.Spec.Jobs[key] = job
 	// }
 
-	for k := range c.DefaultEnvs {
-		hx.Envs[k] = c.Envs[k]
+	for k, v := range w.EnvVarSet.Values {
+		hx.Envs[k] = v
 	}
-
 	setDefaults(&hx.Spec)
 
 	hx.AddTemplate("pullSecret", pullSecret)
@@ -135,11 +132,13 @@ func executeAll(writer io.Writer, c *global.Context, istioEnabled bool) {
 	templatePath := "templates"
 
 	if isPathExist(templatePath) {
+
 		files, err := ioutil.ReadDir(templatePath)
 		if err != nil {
 			panic(err)
 		}
-		c.Templates = make(map[string][]byte)
+
+		w.Templates = make(map[string][]byte)
 
 		for _, f := range files {
 			if !f.IsDir() {
@@ -149,10 +148,11 @@ func executeAll(writer io.Writer, c *global.Context, istioEnabled bool) {
 				}
 				hx.AddTemplate(strings.Replace(filepath.Base(f.Name()), filepath.Ext(f.Name()), "", -1), string(data))
 				// 存取自定义模版
-				c.Templates[f.Name()] = data
+				w.Templates[f.Name()] = data
 			}
 		}
 	}
+
 	err := hx.ExecuteAll(writer, &hx.Spec)
 	if err != nil {
 		panic(err)

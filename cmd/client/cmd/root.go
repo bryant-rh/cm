@@ -1,16 +1,17 @@
 package cmd
 
 import (
-	"github.com/bryant-rh/cm/cmd/client/global"
-	"github.com/bryant-rh/cm/pkg/client"
-	"github.com/bryant-rh/cm/pkg/environment"
-	"github.com/bryant-rh/cm/pkg/util"
 	"flag"
 	"fmt"
 	"math/rand"
 	"os"
 	"strings"
 	"time"
+
+	"github.com/bryant-rh/cm/cmd/client/global"
+	"github.com/bryant-rh/cm/pkg/client"
+	"github.com/bryant-rh/cm/pkg/environment"
+	"github.com/bryant-rh/cm/pkg/util"
 
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
@@ -19,13 +20,11 @@ import (
 	"k8s.io/klog/v2"
 )
 
-
-
 func NewCmd() *cobra.Command {
 	// rootCmd represents the base command when called without any subcommands
 	rootCmd := &cobra.Command{
-		Use:     "cm", // This is prefixed by kubectl in the custom usage template
-		Short:   "cm is a tool for managing k8s clusters",
+		Use:   "cm", // This is prefixed by kubectl in the custom usage template
+		Short: "cm is a tool for managing k8s clusters",
 		Long: `cm is a tool for managing k8s clusters.
 You can invoke cm through comand: "cm [command]..."`,
 		SilenceUsage:  true,

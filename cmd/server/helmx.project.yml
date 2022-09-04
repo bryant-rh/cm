@@ -1,0 +1,5 @@
+project:
+  name: cm-server
+  version: 0.0.1
+  group: infra
+  description: server

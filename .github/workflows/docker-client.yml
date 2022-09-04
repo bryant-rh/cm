@@ -3,7 +3,7 @@ name: docker-client
 on:
   push:
     paths:
-      - 'Dockerfile.client'
+     # - 'Dockerfile.client'
       - 'cmd/client'
 #      - .version
 

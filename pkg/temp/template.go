@@ -117,9 +117,15 @@ GOOS ?= $(shell go env GOOS)
 GOARCH ?= $(shell go env GOARCH)
 CGO_ENABLED ?= 0
 
-GOBUILD=CGO_ENABLED=$(CGO_ENABLED) GOOS=$(GOOS) GOARCH=$(GOARCH) go build -a -ldflags "-X ${PKG}/version.Version=${VERSION}+sha.${COMMIT_SHA}"	OPENAPI=tools openapi
+GOBUILD=CGO_ENABLED=$(CGO_ENABLED) GOOS=$(GOOS) GOARCH=$(GOARCH) go build -a -ldflags "-X ${PKG}/version.Version=${VERSION}+sha.${COMMIT_SHA}"
 
 WORKSPACE ?= name
+
+upgrade:
+	go get -u ./...
+
+tidy:
+	go mod tidy
 
 build: 
 	cd ./cmd/$(WORKSPACE) && $(GOBUILD)

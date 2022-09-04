@@ -3,17 +3,23 @@ module github.com/bryant-rh/cm
 go 1.18
 
 require (
+	github.com/alecthomas/chroma v0.10.0
 	github.com/bryant-rh/k8sutil v0.0.1
 	github.com/bwmarrin/snowflake v0.3.0
+	github.com/davecgh/go-spew v1.1.1
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.8.1
+	github.com/go-courier/dockerfileyml v0.2.0
 	github.com/go-courier/helmx v1.16.0
 	github.com/go-courier/reflectx v1.3.5
+	github.com/go-courier/semver v1.0.1
 	github.com/go-courier/sqlx/v2 v2.23.11
 	github.com/go-courier/statuserror v1.2.1
+	github.com/go-courier/x v0.0.11
 	github.com/imroc/req/v3 v3.19.2
 	github.com/kunlun-qilian/confmysql v0.0.4
 	github.com/kunlun-qilian/confserver v0.0.10
+	github.com/logrusorgru/aurora v2.0.3+incompatible
 	github.com/logrusorgru/aurora/v3 v3.0.0
 	github.com/manifoldco/promptui v0.9.0
 	github.com/mattn/go-isatty v0.0.16
@@ -35,6 +41,7 @@ require (
 	k8s.io/apimachinery v0.25.0
 	k8s.io/client-go v0.25.0
 	k8s.io/klog/v2 v2.70.1
+	mvdan.cc/sh/v3 v3.5.1
 )
 
 require (
@@ -43,8 +50,7 @@ require (
 	github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578 // indirect
 	github.com/cheekybits/genny v1.0.0 // indirect
 	github.com/chzyer/readline v0.0.0-20180603132655-2972be24d48e // indirect
-	github.com/creack/pty v1.1.11 // indirect
-	github.com/davecgh/go-spew v1.1.1 // indirect
+	github.com/dlclark/regexp2 v1.4.0 // indirect
 	github.com/emicklei/go-restful/v3 v3.8.0 // indirect
 	github.com/evanphx/json-patch v4.12.0+incompatible // indirect
 	github.com/fatih/color v1.13.0 // indirect
@@ -57,7 +63,6 @@ require (
 	github.com/go-courier/httptransport v1.21.11 // indirect
 	github.com/go-courier/logr v0.0.2 // indirect
 	github.com/go-courier/metax v1.3.0 // indirect
-	github.com/go-courier/x v0.0.11 // indirect
 	github.com/go-logr/logr v1.2.3 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-openapi/jsonpointer v0.19.5 // indirect
@@ -120,6 +125,7 @@ require (
 	golang.org/x/mod v0.6.0-dev.0.20220419223038-86c51ed26bb4 // indirect
 	golang.org/x/net v0.0.0-20220802222814-0bcc04d9c69b // indirect
 	golang.org/x/oauth2 v0.0.0-20220411215720-9780585627b5 // indirect
+	golang.org/x/sync v0.0.0-20220722155255-886fb9371eb4 // indirect
 	golang.org/x/sys v0.0.0-20220811171246-fbc7d0a398ab // indirect
 	golang.org/x/term v0.0.0-20210927222741-03fcf44c2211 // indirect
 	golang.org/x/text v0.3.7 // indirect

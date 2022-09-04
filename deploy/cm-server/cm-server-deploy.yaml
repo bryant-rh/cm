@@ -118,5 +118,5 @@ spec:
               pathType: Prefix
   # tls:
   #     - hosts:
-  #       - kube-gateway-test.sensorsdata.cn
+  #       - cm-server.example.cn
   #       secretName: nginx-tls

@@ -1,5 +1,5 @@
 project:
-  name: cm
+  name: cm-client
   version: 0.0.1
   group: infra
-  description: cluster-mgr
+  description: client

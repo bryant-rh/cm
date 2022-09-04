@@ -10,7 +10,7 @@ ARG Github_Token
 # build
 RUN go env -w GOPRIVATE="github.com/kunlun-qilian" && \ 
     git config --global url."https://${Github_UserName}:${Github_Token}@github.com".insteadOf  "https://github.com" && \
-    make build WORKSPACE=server 
+    make build.cm.server WORKSPACE=server 
 
 # runtime
 FROM alpine
