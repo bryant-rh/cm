@@ -208,11 +208,11 @@ func setDefaults(s *spec.Spec) {
 	}
 
 	if _, ok := s.Resources["cpu"]; !ok {
-		s.Resources["cpu"], _ = spec.ParseRequestAndLimit("10/500m")
+		s.Resources["cpu"], _ = spec.ParseRequestAndLimit("100/500m")
 	}
 
 	if _, ok := s.Resources["memory"]; !ok {
-		s.Resources["memory"], _ = spec.ParseRequestAndLimit("10/1024Mi")
+		s.Resources["memory"], _ = spec.ParseRequestAndLimit("100/1024Mi")
 	}
 }
 

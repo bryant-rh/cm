@@ -9,8 +9,8 @@ import (
 func Helmxfile() []byte {
 	helmxyml := bytes.NewBuffer(nil)
 
-	_, _ = fmt.Fprint(helmxyml, 
-`
+	_, _ = fmt.Fprint(helmxyml,
+		`
 service:
   ports:
     - "80"
@@ -21,7 +21,10 @@ service:
   livenessProbe:
     action: http://:80
     initialDelaySeconds: 5
-    periodSeconds: 5`)
+    periodSeconds: 5
+resources:
+  cpu: 100/1000m
+  memory: 200/1000M`)
 	return helmxyml.Bytes()
 }
 
