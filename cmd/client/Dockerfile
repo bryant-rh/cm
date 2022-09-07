@@ -28,5 +28,6 @@ ENV CM_SERVER_BASEURL=${CM_SERVER_BASEURL} CM_SERVER_USERNAME=${CM_SERVER_USERNA
 
 #COPY --from=builder /go/src/cmd/client/client /usr/bin/cm
 COPY --from=builder /go/src/cmd/client/out/*.tar.gz /usr/share/nginx/html/
+
 # WORKDIR /
 # CMD ["/bin/sh"]
