@@ -401,6 +401,14 @@ func (p Project) DefaultImageTag() string {
 	return "~" + p.Group + "/" + p.Name + ":" + strings.Replace(p.Version.String(), "+", "--", -1)
 }
 
+type helmxProject struct {
+	Name        string `env:"name" yaml:"name" json:"name"`
+	Feature     string `env:"feature" yaml:"feature,omitempty" json:"feature,omitempty"`
+	Version     string `env:"version" yaml:"version" json:"version"`
+	Group       string `env:"group" yaml:"group,omitempty" json:"group,omitempty"`
+	Description string `env:"description" yaml:"description,omitempty" json:"description,omitempty"`
+}
+
 func (w *Workspace) InitProject() {
 
 	answers := struct {
@@ -451,9 +459,10 @@ func (w *Workspace) InitProject() {
 		return
 	}
 
-	w.Spec.Project.Name = answers.Name
-	w.Spec.Project.Group = answers.Group
-	w.Spec.Project.Description = answers.Description
+
+	w.Project.Name = answers.Name
+	w.Project.Group = answers.Group
+	w.Project.Description = answers.Description
 
 	if answers.Version != "" {
 		if v, err := semver.ParseVersion(answers.Version); err == nil {
@@ -462,10 +471,17 @@ func (w *Workspace) InitProject() {
 
 	}
 
+	s := helmxProject{}
+	s.Name = w.Project.Name
+	s.Group = w.Project.Group
+	s.Description = w.Project.Description
+	s.Version = w.Project.Version.String()
+
+
 	MustWriteYAML(w.Path("./helmx.project.yml"), struct {
-		Project *spec.Project
+		Project helmxProject
 	}{
-		Project: w.Spec.Project,
+		Project: s,
 	})
 	//helmx.MustWriteYAML(w.Path("./helmx.project.yml"), w.Project)
 
