@@ -48,11 +48,11 @@ spec:
       - name: cm-server
         resources:
           requests:
-            cpu: 2000m
-            memory: 2048Mi
+            cpu: 100m
+            memory: 100Mi
           limits:
             cpu: 2000m
-            memory: 2048Mi
+            memory: 2000Mi
         readinessProbe:
           httpGet:
             port: 80
@@ -65,7 +65,7 @@ spec:
             scheme: HTTP
           initialDelaySeconds: 5
           periodSeconds: 5
-        image: bryantrh/cm-server:0.0.1-a627e3e
+        image: bryantrh/cm-server:0.0.1-9bffd98
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
@@ -79,11 +79,11 @@ spec:
           value: debug
         - name: CM_SERVER__Server_Mode
           value: debug
-        - name: CM_SERVER__Server_Port: 
+        - name: CM_SERVER__Server_Port
           value: "80"
-        - name: CM_SERVER__Default_UserName: 
+        - name: CM_SERVER__Default_UserName
           value: "admin"
-        - name: CM_SERVER__Default_PassWord: 
+        - name: CM_SERVER__Default_PassWord
           value: "123456"
         - name: CM_SERVER__TestEnvStr
           value: global.config
