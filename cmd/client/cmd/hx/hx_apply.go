@@ -29,10 +29,10 @@ func NewCmdHxApply(ctx *hxctx.Context) *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			klog.V(4).Infoln("hx apply")
 			if !deployOpt.DryRun {
-				if global.ProjectName == "" || global.ClusterName == "" || global.NameSpace == "" {
+				if global.ProjectName == "" || global.ClusterName == "" {
 					cmd.Help()
-					klog.Fatal(util.RedColor("需要 -p 指定项目名称, -c 指定集群名称, -n 指定namespace"))
-					//fmt.Println(util.RedColor("需要 -p 指定项目名称, -c 指定集群名称, -n 指定namespace"))
+					klog.Fatal(util.RedColor("需要 -p 指定项目名称, -c 指定集群名称 "))
+					//fmt.Println(util.RedColor("需要 -p 指定项目名称, -c 指定集群名称 "))
 
 				}
 				//获取集群名称和token
