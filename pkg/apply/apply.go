@@ -18,7 +18,7 @@ import (
 	"k8s.io/klog/v2"
 )
 
-func RunApply(workspace *hxctx.Workspace, dryRun bool, dynamicClient dynamic.Interface, discoveryClient *discovery.DiscoveryClient) {
+func RunApply(workspace *hxctx.Workspace, dryRun bool) {
 	ns, data := hxctx.CommandForDeploy(workspace)
 	if dryRun {
 		fmt.Println(util.GreenColor(fmt.Sprintf("namespace:[%s], 渲染yaml文件如下:", ns)))
@@ -38,6 +38,30 @@ func RunApply(workspace *hxctx.Workspace, dryRun bool, dynamicClient dynamic.Int
 		if global.NameSpace != "" {
 			ns = global.NameSpace
 		}
+
+		klog.V(4).Infoln("Get ServiceAccount Token")
+
+		res, err := global.CMClient.Sa_GetToken(global.ProjectName, global.ClusterName, ns)
+		if err != nil {
+			klog.Fatal(err)
+		}
+		global.KubeBearerToken = res.Data
+
+		proxy_clustername := fmt.Sprintf("%s_%s", global.ProjectName, global.ClusterName)
+		config, err := kube.RestConfig(proxy_clustername)
+		if err != nil {
+			klog.Fatal(err)
+		}
+		dynamicClient, err := dynamic.NewForConfig(config)
+		if err != nil {
+			panic(err.Error())
+		}
+		discoveryClient, err := discovery.NewDiscoveryClientForConfig(config)
+		if err != nil {
+			panic(err.Error())
+		}
+
+		klog.V(4).Infoln("Create Namespace")
 
 		gvr := schema.GroupVersionResource{
 			Group:    "",

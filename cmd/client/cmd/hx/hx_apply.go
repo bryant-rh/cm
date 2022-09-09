@@ -1,24 +1,17 @@
 package hx
 
 import (
-	"fmt"
-
 	"github.com/spf13/cobra"
-	"k8s.io/client-go/discovery"
-	"k8s.io/client-go/dynamic"
 	"k8s.io/klog/v2"
 
 	"github.com/bryant-rh/cm/cmd/client/global"
 	"github.com/bryant-rh/cm/pkg/apply"
 	"github.com/bryant-rh/cm/pkg/hxctx"
-	"github.com/bryant-rh/cm/pkg/kube"
 	"github.com/bryant-rh/cm/pkg/util"
 )
 
 var (
-	deployOpt       = hxctx.DeployOpt{}
-	dynamicClient   dynamic.Interface
-	discoveryClient *discovery.DiscoveryClient
+	deployOpt = hxctx.DeployOpt{}
 )
 
 func NewCmdHxApply(ctx *hxctx.Context) *cobra.Command {
@@ -41,36 +34,14 @@ func NewCmdHxApply(ctx *hxctx.Context) *cobra.Command {
 					klog.Fatal(err)
 				}
 
-				klog.V(4).Infoln("Get ServiceAccount Token")
-
-				res, err := global.CMClient.Sa_GetToken(global.ProjectName, global.ClusterName, global.NameSpace)
-				if err != nil {
-					klog.Fatal(err)
-				}
-				global.KubeBearerToken = res.Data
-
-				proxy_clustername := fmt.Sprintf("%s_%s", global.ProjectName, global.ClusterName)
-				config, err := kube.RestConfig(proxy_clustername)
-				if err != nil {
-					klog.Fatal(err)
-				}
-				dynamicClient, err = dynamic.NewForConfig(config)
-				if err != nil {
-					panic(err.Error())
-				}
-				discoveryClient, err = discovery.NewDiscoveryClientForConfig(config)
-				if err != nil {
-					panic(err.Error())
-				}
-
 				ctx.Range(func(w *hxctx.Workspace) {
-					apply.RunApply(w, deployOpt.DryRun, dynamicClient, discoveryClient)
+					apply.RunApply(w, deployOpt.DryRun)
 
 				})
 
 			} else {
 				ctx.Range(func(w *hxctx.Workspace) {
-					apply.RunApply(w, deployOpt.DryRun, dynamicClient, discoveryClient)
+					apply.RunApply(w, deployOpt.DryRun)
 
 				})
 			}
