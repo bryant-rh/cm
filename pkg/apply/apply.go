@@ -10,6 +10,9 @@ import (
 	"github.com/bryant-rh/cm/pkg/hxctx"
 	"github.com/bryant-rh/cm/pkg/kube"
 	"github.com/bryant-rh/cm/pkg/util"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
+	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/client-go/discovery"
 	"k8s.io/client-go/dynamic"
 	"k8s.io/klog/v2"
@@ -21,25 +24,6 @@ func RunApply(workspace *hxctx.Workspace, dryRun bool, dynamicClient dynamic.Int
 		fmt.Println(util.GreenColor(fmt.Sprintf("namespace:[%s], 渲染yaml文件如下:", ns)))
 		fmt.Println(data)
 	} else {
-		// if global.ProjectName == "" || global.ClusterName == "" || global.NameSpace == "" {
-		// 	cmd.Help()
-		// 	klog.Fatal(util.RedColor("需要 -p 指定项目名称, -c 指定集群名称, -n 指定namespace"))
-		// 	//fmt.Println(util.RedColor("需要 -p 指定项目名称, -c 指定集群名称, -n 指定namespace"))
-
-		// }
-		// //获取集群名称和token
-		// err := global.PreRun(cmd, args)
-		// if err != nil {
-		// 	klog.Fatal(err)
-		// }
-
-		// klog.V(4).Infoln("Get ServiceAccount Token")
-
-		// res, err := global.CMClient.Sa_GetToken(global.ProjectName, global.ClusterName, global.NameSpace)
-		// if err != nil {
-		// 	klog.Fatal(err)
-		// }
-		// global.KubeBearerToken = res.Data
 
 		//去除空行
 		re := regexp.MustCompile(`(?m)^\s*$[\r\n]*|[\r\n]+\s+\z`)
@@ -55,19 +39,20 @@ func RunApply(workspace *hxctx.Workspace, dryRun bool, dynamicClient dynamic.Int
 			ns = global.NameSpace
 		}
 
-		// proxy_clustername := fmt.Sprintf("%s_%s", global.ProjectName, global.ClusterName)
-		// config, err := kube.RestConfig(proxy_clustername)
-		// if err != nil {
-		// 	klog.Fatal(err)
-		// }
-		// dynamicClient, err := dynamic.NewForConfig(config)
-		// if err != nil {
-		// 	panic(err.Error())
-		// }
-		// discoveryClient, err := discovery.NewDiscoveryClientForConfig(config)
-		// if err != nil {
-		// 	panic(err.Error())
-		// }
+		gvr := schema.GroupVersionResource{
+			Group:    "",
+			Version:  "v1",
+			Resource: "namespaces",
+		}
+		obj, err := dynamicClient.Resource(gvr).Get(context.TODO(), ns, metav1.GetOptions{})
+		if err != nil && obj == nil {
+			s := getObject("v1", "Namespace", ns)
+			_, err := dynamicClient.Resource(gvr).Create(context.TODO(), s, metav1.CreateOptions{})
+			if err != nil {
+				klog.Fatalf("create Namespace: [%s] error: %v", ns, err)
+
+			}
+		}
 
 		fmt.Println(applyStr)
 		applyOptions := kube.NewApplyOptions(dynamicClient, discoveryClient)
@@ -77,5 +62,17 @@ func RunApply(workspace *hxctx.Workspace, dryRun bool, dynamicClient dynamic.Int
 			fmt.Println(util.GreenColor("服务部署成功"))
 
 		}
+	}
+}
+
+func getObject(version, kind, name string) *unstructured.Unstructured {
+	return &unstructured.Unstructured{
+		Object: map[string]interface{}{
+			"apiVersion": version,
+			"kind":       kind,
+			"metadata": map[string]interface{}{
+				"name": name,
+			},
+		},
 	}
 }

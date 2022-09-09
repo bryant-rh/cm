@@ -38,6 +38,9 @@ FROM docker.io/library/golang:1.18-buster AS build-env
 
 FROM build-env AS builder
 
+ARG GOSUMDB
+ARG GOPROXY=https://goproxy.cn,direct
+ENV GONOSUMDB=${GITLAB_HOST}/*
 WORKDIR /go/src
 COPY ./ ./
 
@@ -45,7 +48,7 @@ COPY ./ ./
 RUN make build WORKSPACE=`+service_name+`
 
 # runtime
-FROM alpine
+FROM alpine:3.14
 COPY --from=builder `+filepath.Join("/go/src/cmd", service_name, service_name)+` `+filepath.Join(`/go/bin`, service_name)+`
 `)
 		fmt.Fprintf(dockerfile, `
