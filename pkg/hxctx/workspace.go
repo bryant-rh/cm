@@ -192,6 +192,7 @@ func (w *Workspace) loadSpecs() {
 		if v, err := semver.ParseVersion(w.Spec.Project.Version.String()); err == nil {
 			w.Project.Version = *v
 		}
+
 	}
 
 	// if s.Service != nil {
@@ -241,12 +242,23 @@ func (w *Workspace) setProjectDefaults() {
 			panic(err)
 		}
 		w.Project.Version = *v
+		
+		v1, err := spec.ParseVersion(string(bytes.TrimSpace(ver)))
+		if err != nil {
+			panic(err)
+		}
+		w.Spec.Project.Version = *v1
 	}
 
 	if sha := os.Getenv("COMMIT_SHA"); sha != "" {
 		v, err := w.Project.Version.WithPrerelease(sha)
 		if err == nil {
 			w.Project.Version = *v
+		}
+
+		suffix := GetShortSha()
+		if suffix != "" {
+			w.Spec.Project.Version.Suffix = suffix
 		}
 	}
 
@@ -459,7 +471,6 @@ func (w *Workspace) InitProject() {
 		return
 	}
 
-
 	w.Project.Name = answers.Name
 	w.Project.Group = answers.Group
 	w.Project.Description = answers.Description
@@ -476,7 +487,6 @@ func (w *Workspace) InitProject() {
 	s.Group = w.Project.Group
 	s.Description = w.Project.Description
 	s.Version = w.Project.Version.String()
-
 
 	MustWriteYAML(w.Path("./helmx.project.yml"), struct {
 		Project helmxProject
