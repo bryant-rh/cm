@@ -1,4 +1,4 @@
-package hx
+package cmd
 
 import (
 	"bytes"

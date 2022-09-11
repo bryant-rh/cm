@@ -45,6 +45,9 @@ You can invoke cm through comand: "cm [command]..."`,
 	rootCmd.AddCommand(NewCmdDelete())
 	rootCmd.AddCommand(NewCmdAdd())
 	rootCmd.AddCommand(NewCmdHx())
+	rootCmd.AddCommand(NewCmdHxCreateKubeConfig())
+	rootCmd.AddCommand(NewCmdHxCreateProxy())
+
 
 	return rootCmd
 }

@@ -59,5 +59,6 @@ func NewCmdHx() *cobra.Command {
 	hxCmd.AddCommand(hx.NewCmdHxInit(ctx))
 	hxCmd.AddCommand(hx.NewCmdHxConfig(ctx))
 	hxCmd.AddCommand(hx.NewCmdHxApply(ctx))
+
 	return hxCmd
 }
