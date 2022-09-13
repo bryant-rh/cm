@@ -65,7 +65,7 @@ spec:
             scheme: HTTP
           initialDelaySeconds: 5
           periodSeconds: 5
-        image: bryantrh/cm-server:0.0.1-9bffd98
+        image: bryantrh/cm-server:0.0.2-8b97e13
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
