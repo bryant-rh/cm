@@ -30,6 +30,9 @@ cd deploy/cm-server
 #部署mysql
 kubectl apply -f mysql5.7-deploy.yaml
 
+# 导入sql
+cm-server.sql
+
 #部署cm-server
 kubectl apply -f cm-server-deploy.yaml
 
